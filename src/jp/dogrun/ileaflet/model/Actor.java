@@ -1,11 +1,14 @@
 package jp.dogrun.ileaflet.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.google.appengine.api.datastore.Key;
 
 import org.slim3.datastore.Attribute;
+import org.slim3.datastore.CreationDate;
 import org.slim3.datastore.Model;
+import org.slim3.datastore.ModificationDate;
 
 @Model(schemaVersion = 1)
 public class Actor implements Serializable {
@@ -17,6 +20,15 @@ public class Actor implements Serializable {
 
     @Attribute(version = true)
     private Long version;
+    
+    private String Identity;
+    private String email;
+    private String name;
+    
+    @Attribute(listener = CreationDate.class)
+    private Date createAt;
+    @Attribute(listener = ModificationDate.class)
+    private Date editAt;
 
     /**
      * Returns the key.
@@ -84,5 +96,45 @@ public class Actor implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getIdentity() {
+        return Identity;
+    }
+
+    public void setIdentity(String identity) {
+        Identity = identity;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
+    }
+
+    public Date getEditAt() {
+        return editAt;
+    }
+
+    public void setEditAt(Date editAt) {
+        this.editAt = editAt;
     }
 }
