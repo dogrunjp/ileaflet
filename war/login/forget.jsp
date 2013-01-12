@@ -6,19 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>login Index</title>
+<title>login Forget</title>
 </head>
 <body>
-
-<form method="POST" action="./logon">
-	<input type="text" name="identity">
-	<input type="text" name="password">
-	<input type="submit">
-</form>
-
-<a href="./create">アカウントの新規作成</a>
-
-<a href="./forget">パスワードを忘れたら。。。</a>
-
+<p>Hello login Forget !!!</p>
 </body>
 </html>
