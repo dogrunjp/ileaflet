@@ -1,0 +1,5 @@
+src/jp/co/ziro/sacchi/meta/*
+war/WEB-INF/classes/*
+www-test/*
+war/WEB-INF/appengine-generated*
+*.class
