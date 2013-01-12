@@ -10,5 +10,15 @@
 </head>
 <body>
 <p>Hello login Index !!!</p>
+
+
+<form method="POST" action="./logon">
+	<input type="text" name="identity">
+	<input type="text" name="password">
+	<input type="submit">
+</form>
+
+
+
 </body>
 </html>
