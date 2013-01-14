@@ -13,12 +13,13 @@
 <form method="POST" action="./logon">
 	<input type="text" name="identity">
 	<input type="text" name="password">
+	<input type="hidden" name="redirect" value="${redirect}">
 	<input type="submit">
 </form>
 
-<a href="./create">アカウントの新規作成</a>
+<a href="./?type=create">アカウントの新規作成</a>
 
-<a href="./forget">パスワードを忘れたら。。。</a>
+<a href="./?type=forget">パスワードを忘れたら。。。</a>
 
 </body>
 </html>

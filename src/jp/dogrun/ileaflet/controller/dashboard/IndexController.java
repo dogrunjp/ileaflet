@@ -9,8 +9,7 @@ public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
-        
-        Actor actor = (Actor)request.getSession().getAttribute(Actor.class.getName());
+        Actor actor = sessionScope(Actor.class.getName());
         //ログイン状態を取得
         if ( actor == null ) {
             return forward("../login/");

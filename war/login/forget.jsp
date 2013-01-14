@@ -10,5 +10,11 @@
 </head>
 <body>
 <p>Hello login Forget !!!</p>
+
+<form method="POST" action="./sendForgetMail">
+	<input type="text" name="mail">
+	<input type="submit">
+</form>
+
 </body>
 </html>

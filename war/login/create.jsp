@@ -9,6 +9,14 @@
 <title>login Create</title>
 </head>
 <body>
-<p>Hello login Create !!!</p>
+
+<form method="POST" action="./register">
+	<input type="text" name="identity" value="${identity}">
+	<input type="text" name="name" value="${name}">
+	<input type="text" name="mail" value="${mail}">
+	<input type="password" name="password">
+	<input type="password" name="password2">
+	<input type="submit">
+</form>
 </body>
 </html>
