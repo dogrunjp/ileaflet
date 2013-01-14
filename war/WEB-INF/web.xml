@@ -105,4 +105,9 @@
             <role-name>admin</role-name>
         </auth-constraint>
     </security-constraint>
+    
+    <taglib>
+        <taglib-uri>/ileaflet</taglib-uri>
+        <taglib-location>/WEB-INF/tld/ileaflet.tld</taglib-location>
+    </taglib>
 </web-app>
