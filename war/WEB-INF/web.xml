@@ -107,7 +107,17 @@
     </security-constraint>
     
     <taglib>
-        <taglib-uri>/ileaflet</taglib-uri>
+        <taglib-uri>http://dogrun.jp/ileaflet/tags</taglib-uri>
         <taglib-location>/WEB-INF/tld/ileaflet.tld</taglib-location>
     </taglib>
+    
+    <jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+			<page-encoding>UTF-8</page-encoding>
+			<scripting-invalid>false</scripting-invalid>
+			<include-prelude>/common.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
 </web-app>

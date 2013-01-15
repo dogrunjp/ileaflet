@@ -9,6 +9,10 @@
 <title>Index</title>
 </head>
 <body>
-<p>Hello Index !!!</p>
+
+
+<ileaflet:login/>
+
+
 </body>
 </html>
