@@ -1,11 +1,8 @@
 package jp.dogrun.ileaflet.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-01-15 18:02:53")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-01-16 19:48:15")
 /** */
 public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ileaflet.model.Actor> {
-
-    /** */
-    public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> Identity = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "Identity", "Identity");
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.util.Date> createAt = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.util.Date>(this, "createAt", "createAt", java.util.Date.class);
@@ -17,10 +14,16 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
     public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> email = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "email", "email");
 
     /** */
+    public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> identity = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "identity", "identity");
+
+    /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, com.google.appengine.api.datastore.Key> key = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, com.google.appengine.api.datastore.Key>(this, "__key__", "key", com.google.appengine.api.datastore.Key.class);
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> name = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "name", "name");
+
+    /** */
+    public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> password = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "password", "password");
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Long> version = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Long>(this, "version", "version", java.lang.Long.class);
@@ -46,12 +49,13 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
     @Override
     public jp.dogrun.ileaflet.model.Actor entityToModel(com.google.appengine.api.datastore.Entity entity) {
         jp.dogrun.ileaflet.model.Actor model = new jp.dogrun.ileaflet.model.Actor();
-        model.setIdentity((java.lang.String) entity.getProperty("Identity"));
         model.setCreateAt((java.util.Date) entity.getProperty("createAt"));
         model.setEditAt((java.util.Date) entity.getProperty("editAt"));
         model.setEmail((java.lang.String) entity.getProperty("email"));
+        model.setIdentity((java.lang.String) entity.getProperty("identity"));
         model.setKey(entity.getKey());
         model.setName((java.lang.String) entity.getProperty("name"));
+        model.setPassword((java.lang.String) entity.getProperty("password"));
         model.setVersion((java.lang.Long) entity.getProperty("version"));
         return model;
     }
@@ -65,11 +69,12 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         } else {
             entity = new com.google.appengine.api.datastore.Entity(kind);
         }
-        entity.setProperty("Identity", m.getIdentity());
         entity.setProperty("createAt", m.getCreateAt());
         entity.setProperty("editAt", m.getEditAt());
         entity.setProperty("email", m.getEmail());
+        entity.setProperty("identity", m.getIdentity());
         entity.setProperty("name", m.getName());
+        entity.setProperty("password", m.getPassword());
         entity.setProperty("version", m.getVersion());
         entity.setProperty("slim3.schemaVersion", 1);
         return entity;
@@ -136,10 +141,6 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         jp.dogrun.ileaflet.model.Actor m = (jp.dogrun.ileaflet.model.Actor) model;
         writer.beginObject();
         org.slim3.datastore.json.Default encoder0 = new org.slim3.datastore.json.Default();
-        if(m.getIdentity() != null){
-            writer.setNextPropertyName("Identity");
-            encoder0.encode(writer, m.getIdentity());
-        }
         if(m.getCreateAt() != null){
             writer.setNextPropertyName("createAt");
             encoder0.encode(writer, m.getCreateAt());
@@ -152,6 +153,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
             writer.setNextPropertyName("email");
             encoder0.encode(writer, m.getEmail());
         }
+        if(m.getIdentity() != null){
+            writer.setNextPropertyName("identity");
+            encoder0.encode(writer, m.getIdentity());
+        }
         if(m.getKey() != null){
             writer.setNextPropertyName("key");
             encoder0.encode(writer, m.getKey());
@@ -159,6 +164,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         if(m.getName() != null){
             writer.setNextPropertyName("name");
             encoder0.encode(writer, m.getName());
+        }
+        if(m.getPassword() != null){
+            writer.setNextPropertyName("password");
+            encoder0.encode(writer, m.getPassword());
         }
         if(m.getVersion() != null){
             writer.setNextPropertyName("version");
@@ -172,18 +181,20 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         jp.dogrun.ileaflet.model.Actor m = new jp.dogrun.ileaflet.model.Actor();
         org.slim3.datastore.json.JsonReader reader = null;
         org.slim3.datastore.json.Default decoder0 = new org.slim3.datastore.json.Default();
-        reader = rootReader.newObjectReader("Identity");
-        m.setIdentity(decoder0.decode(reader, m.getIdentity()));
         reader = rootReader.newObjectReader("createAt");
         m.setCreateAt(decoder0.decode(reader, m.getCreateAt()));
         reader = rootReader.newObjectReader("editAt");
         m.setEditAt(decoder0.decode(reader, m.getEditAt()));
         reader = rootReader.newObjectReader("email");
         m.setEmail(decoder0.decode(reader, m.getEmail()));
+        reader = rootReader.newObjectReader("identity");
+        m.setIdentity(decoder0.decode(reader, m.getIdentity()));
         reader = rootReader.newObjectReader("key");
         m.setKey(decoder0.decode(reader, m.getKey()));
         reader = rootReader.newObjectReader("name");
         m.setName(decoder0.decode(reader, m.getName()));
+        reader = rootReader.newObjectReader("password");
+        m.setPassword(decoder0.decode(reader, m.getPassword()));
         reader = rootReader.newObjectReader("version");
         m.setVersion(decoder0.decode(reader, m.getVersion()));
         return m;

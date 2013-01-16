@@ -21,9 +21,10 @@ public class Actor implements Serializable {
     @Attribute(version = true)
     private Long version;
     
-    private String Identity;
+    private String identity;
     private String email;
     private String name;
+    private String password;
     
     @Attribute(listener = CreationDate.class)
     private Date createAt;
@@ -99,11 +100,11 @@ public class Actor implements Serializable {
     }
 
     public String getIdentity() {
-        return Identity;
+        return identity;
     }
 
     public void setIdentity(String identity) {
-        Identity = identity;
+        this.identity = identity;
     }
 
     public String getEmail() {
@@ -136,5 +137,13 @@ public class Actor implements Serializable {
 
     public void setEditAt(Date editAt) {
         this.editAt = editAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
