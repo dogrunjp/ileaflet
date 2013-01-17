@@ -16,6 +16,13 @@
 
     <div id="mainMenu">
     ${param.mainMenu}
+<c:if test="${not empty errors}">
+<ul>
+<c:forEach var="e" items="${f:errors()}">
+<li><span class="error">${f:h(e)}</span></li>
+</c:forEach>
+</ul>
+</c:if>
     </div>
   </div>
 
