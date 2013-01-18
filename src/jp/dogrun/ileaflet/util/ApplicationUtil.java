@@ -3,11 +3,22 @@ package jp.dogrun.ileaflet.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class ApplicationUtil {
+    
+    public static String getHost(HttpServletRequest request) {
+        String url = request.getRequestURL().toString();
+        String uri = request.getRequestURI();
+        int idx = url.indexOf(uri);
+        String server = url.substring(0,idx);
+        return server;
+    }
 
     public static String changeMD5(String src) {
         return digest("MD5",src);
     }
+    
     private static String digest(String digest,String str) {
         if (str == null || str.length() == 0) {
             throw new IllegalArgumentException("文字列がNull、または空です。");

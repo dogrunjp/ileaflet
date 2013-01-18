@@ -1,6 +1,6 @@
 package jp.dogrun.ileaflet.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-01-17 18:00:55")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-01-18 18:42:50")
 /** */
 public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ileaflet.model.Actor> {
 
@@ -20,10 +20,16 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
     public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, com.google.appengine.api.datastore.Key> key = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, com.google.appengine.api.datastore.Key>(this, "__key__", "key", com.google.appengine.api.datastore.Key.class);
 
     /** */
+    public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> keyword = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "keyword", "keyword");
+
+    /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> name = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "name", "name");
 
     /** */
     public final org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor> password = new org.slim3.datastore.StringAttributeMeta<jp.dogrun.ileaflet.model.Actor>(this, "password", "password");
+
+    /** */
+    public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Integer> purchase = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Integer>(this, "purchase", "purchase", java.lang.Integer.class);
 
     /** */
     public final org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Long> version = new org.slim3.datastore.CoreAttributeMeta<jp.dogrun.ileaflet.model.Actor, java.lang.Long>(this, "version", "version", java.lang.Long.class);
@@ -54,8 +60,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         model.setEmail((java.lang.String) entity.getProperty("email"));
         model.setIdentity((java.lang.String) entity.getProperty("identity"));
         model.setKey(entity.getKey());
+        model.setKeyword((java.lang.String) entity.getProperty("keyword"));
         model.setName((java.lang.String) entity.getProperty("name"));
         model.setPassword((java.lang.String) entity.getProperty("password"));
+        model.setPurchase(longToInteger((java.lang.Long) entity.getProperty("purchase")));
         model.setVersion((java.lang.Long) entity.getProperty("version"));
         return model;
     }
@@ -73,8 +81,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         entity.setProperty("editAt", m.getEditAt());
         entity.setProperty("email", m.getEmail());
         entity.setProperty("identity", m.getIdentity());
+        entity.setProperty("keyword", m.getKeyword());
         entity.setProperty("name", m.getName());
         entity.setProperty("password", m.getPassword());
+        entity.setProperty("purchase", m.getPurchase());
         entity.setProperty("version", m.getVersion());
         entity.setProperty("slim3.schemaVersion", 1);
         return entity;
@@ -161,6 +171,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
             writer.setNextPropertyName("key");
             encoder0.encode(writer, m.getKey());
         }
+        if(m.getKeyword() != null){
+            writer.setNextPropertyName("keyword");
+            encoder0.encode(writer, m.getKeyword());
+        }
         if(m.getName() != null){
             writer.setNextPropertyName("name");
             encoder0.encode(writer, m.getName());
@@ -168,6 +182,10 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         if(m.getPassword() != null){
             writer.setNextPropertyName("password");
             encoder0.encode(writer, m.getPassword());
+        }
+        if(m.getPurchase() != null){
+            writer.setNextPropertyName("purchase");
+            encoder0.encode(writer, m.getPurchase());
         }
         if(m.getVersion() != null){
             writer.setNextPropertyName("version");
@@ -191,10 +209,14 @@ public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ile
         m.setIdentity(decoder0.decode(reader, m.getIdentity()));
         reader = rootReader.newObjectReader("key");
         m.setKey(decoder0.decode(reader, m.getKey()));
+        reader = rootReader.newObjectReader("keyword");
+        m.setKeyword(decoder0.decode(reader, m.getKeyword()));
         reader = rootReader.newObjectReader("name");
         m.setName(decoder0.decode(reader, m.getName()));
         reader = rootReader.newObjectReader("password");
         m.setPassword(decoder0.decode(reader, m.getPassword()));
+        reader = rootReader.newObjectReader("purchase");
+        m.setPurchase(decoder0.decode(reader, m.getPurchase()));
         reader = rootReader.newObjectReader("version");
         m.setVersion(decoder0.decode(reader, m.getVersion()));
         return m;

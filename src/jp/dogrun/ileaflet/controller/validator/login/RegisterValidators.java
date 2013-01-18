@@ -24,5 +24,9 @@ public class RegisterValidators extends Validators {
     public SameActorValidator sameUser() {
         return SameActorValidator.INSTANCE;
     }
+
+    public KeywordValidator keyword() {
+        return KeywordValidator.INSTANCE;
+    }
    
 }

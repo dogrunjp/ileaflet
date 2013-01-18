@@ -23,6 +23,14 @@ public class ActorDao extends DaoBase<Actor>{
                     meta.email.equal(email)
                 ).asSingle();
     }
+
+    public Actor findByKeyword(String keyword) {
+        ActorMeta meta = ActorMeta.get();
+        return Datastore.query(Actor.class).
+                filter(
+                    meta.keyword.equal(keyword)
+                ).asSingle();
+    }
             
 
 }

@@ -1,4 +1,4 @@
-<%@page pageEncoding="UTF-8" isELIgnored="false" session="false"%>
+<%@page pageEncoding="UTF-8" isELIgnored="false" session="true"%>
 <c:import url="../mainFrame.jsp"> 
   <c:param name="title" value="ダッシュボード"/> 
   <c:param name="stylesheet"> 

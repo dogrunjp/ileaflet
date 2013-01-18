@@ -20,12 +20,14 @@ public class Actor implements Serializable {
 
     @Attribute(version = true)
     private Long version;
-    
+
     private String identity;
     private String email;
     private String name;
     private String password;
-    
+    private Integer purchase;
+    private String keyword;
+ 
     @Attribute(listener = CreationDate.class)
     private Date createAt;
     @Attribute(listener = ModificationDate.class)
@@ -145,5 +147,21 @@ public class Actor implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Integer purchase) {
+        this.purchase = purchase;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

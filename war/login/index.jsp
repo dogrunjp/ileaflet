@@ -9,8 +9,8 @@
   </c:param> 
   <c:param name="content"> 
 <form method="POST" action="./logon">
-	id:<input type="text" name="identity">
-	pass:<input type="text" name="password">
+	id:<input type="text" name="identity" value="${identity}">
+	pass:<input type="password" name="password">
 	<input type="hidden" name="redirect" value="${redirect}">
 	<input type="submit">
 </form>
