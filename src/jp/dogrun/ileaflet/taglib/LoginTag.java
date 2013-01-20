@@ -2,10 +2,13 @@ package jp.dogrun.ileaflet.taglib;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
+
+import org.slim3.util.RequestLocator;
 
 import jp.dogrun.ileaflet.model.Actor;
 
@@ -20,10 +23,9 @@ public class LoginTag extends TagSupport {
     public int doStartTag() throws JspException {
     
         Actor actor = null;
-        HttpSession session = pageContext.getSession();
-        if ( session != null ) {
-            actor = (Actor)session.getAttribute(Actor.class.getName());
-        }
+        
+        HttpServletRequest request = RequestLocator.get();
+        actor = (Actor)request.getSession().getAttribute(Actor.class.getName());
 
         try {
             JspWriter out = pageContext.getOut();

@@ -65,7 +65,6 @@ public class RegisterController extends Controller {
         String keyword = null;
         while (true) {
             keyword = createKeyword();
-            System.out.println(keyword);
         	ActorDao dao = new ActorDao();
         	Actor actor = dao.findByKeyword(keyword);
         	if ( actor == null ) break;
