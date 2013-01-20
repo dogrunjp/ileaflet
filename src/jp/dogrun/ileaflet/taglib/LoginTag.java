@@ -24,8 +24,8 @@ public class LoginTag extends TagSupport {
     
         Actor actor = null;
         
-        HttpServletRequest request = RequestLocator.get();
-        actor = (Actor)request.getSession().getAttribute(Actor.class.getName());
+        //HttpServletRequest request = RequestLocator.get();
+        //actor = (Actor)request.getSession().getAttribute(Actor.class.getName());
 
         try {
             JspWriter out = pageContext.getOut();
