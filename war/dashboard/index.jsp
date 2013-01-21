@@ -6,6 +6,12 @@
   <c:param name="javascript"> 
   </c:param> 
   <c:param name="mainMenu"> 
+
+<form method="POST" action="./upload" enctype="multipart/form-data">
+	<input type="file" name="epubFile">
+	<input type="submit" value="アップロード">
+</form>
+  
   </c:param> 
   <c:param name="content"> 
   </c:param> 
