@@ -26,7 +26,6 @@ public class EpubLogic {
         
         InputStream inStream = new ByteArrayInputStream(data);
         ZipInputStream epubStream = new ZipInputStream(inStream);
-
         ZipEntry entry;
         try {
             entry = epubStream.getNextEntry();
@@ -46,25 +45,20 @@ public class EpubLogic {
 
         byte[] containerData = null;
         String opfName = null;
-        byte[] opfData = null;
         try {
             while ( (entry = epubStream.getNextEntry()) != null ) {
                 String name = entry.getName();
                 epubMap.put(name, true);
-
-                if ( name.equals(opfName) ) {
-                    opfData = read(epubStream,entry);
-                } else if ( name.equals("META-INF/container.xml") ) {
+                if ( name.equals("META-INF/container.xml") ) {
                     containerData = read(epubStream,entry);
                     opfName = getOpfName(containerData);
                     if ( opfName == null ) return false;
                 }
         	}
-            
         } catch (IOException e) {
             return false;
         }
-        
+
         try {
             epubStream.close();
         } catch (IOException e) {
@@ -73,24 +67,16 @@ public class EpubLogic {
 
         if ( containerData == null ) return false;
         if ( opfName == null ) return false;
-
-        //optファイルの取得
-        if ( opfData == null ) {
-            //OPFファイルの存在確認
-            if ( !epubMap.get(opfName) ) return false;
-            try {
-                opfData = retry(opfName,data);
-            } catch (IOException e) {
-                return false;
-            }
-            if ( opfData == null ) {
-                return false;
-            }
-        }
-
-        return checkOpf(opfData,epubMap);
+        if ( !epubMap.get(opfName) ) return false;
+        return true;
     }
-  
+
+    /**
+     * OPFデータのチェック
+     * @param opfData
+     * @param epubMap
+     * @return
+     */
     private boolean checkOpf(byte[] opfData, Map<String, Boolean> epubMap) {
         //全てのファイルが存在しているか？
         //item のhrefが全部あるか？
@@ -151,10 +137,17 @@ public class EpubLogic {
             }
         }
         epubStream.close();
-        
         return opfData;
     }
-    
+   
+    /**
+     * XMLファイルの取得
+     * @param data
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
     private Document loadXml(byte[] data) throws ParserConfigurationException,SAXException,IOException {
         DocumentBuilderFactory fact = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = fact.newDocumentBuilder();
@@ -192,6 +185,12 @@ public class EpubLogic {
         return opfName;
     }
 
+    /**
+     * データの抜き出し
+     * @param stream
+     * @param entry
+     * @return
+     */
     private byte[] read(ZipInputStream stream,ZipEntry entry) {
         byte[] data = new byte[(int)entry.getSize()];
         try {
