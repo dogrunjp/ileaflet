@@ -1,8 +1,6 @@
 package jp.dogrun.ileaflet.controller.dashboard;
 
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
 
 import jp.dogrun.ileaflet.logic.EpubLogic;
 
