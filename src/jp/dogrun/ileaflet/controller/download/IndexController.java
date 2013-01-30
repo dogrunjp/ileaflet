@@ -1,7 +1,7 @@
 package jp.dogrun.ileaflet.controller.download;
 
-import java.io.InputStream;
-import java.nio.channels.Channels;
+import java.math.BigDecimal;
+import java.nio.ByteBuffer;
 
 import jp.dogrun.ileaflet.dao.ContentDao;
 import jp.dogrun.ileaflet.model.Content;
@@ -26,12 +26,15 @@ public class IndexController extends Controller {
         String filename = "/gs/leaflet/" + 
                 content.getIdentity() + "/" + content.getKey().getId() + "/" + content.getTargetRevision() + ".epub";
         AppEngineFile readableFile = new AppEngineFile(filename);
+
         FileReadChannel readChannel =
             fileService.openReadChannel(readableFile, false);
-        
-        InputStream inputStream = Channels.newInputStream(readChannel);
+     
+        Integer capacity = (new BigDecimal(content.getCapacity())).intValue();
+        ByteBuffer buffer = ByteBuffer.allocate(capacity);
+        readChannel.read(buffer);
 
-        this.download(content.getTitle() + ".epub", inputStream);
+        this.download(content.getTitle() + ".epub", buffer.array());
         
         return null;
     }
