@@ -9,7 +9,9 @@ import jp.dogrun.ileaflet.model.Content;
 import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
+import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
+import org.slim3.util.ApplicationMessage;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -23,6 +25,10 @@ public class UploadController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+        
+        if ( !validate() ) {
+            return forward("index.jsp");
+        }
 
         FileItem fileItem = requestScope("epubFile");
         
@@ -30,6 +36,7 @@ public class UploadController extends Controller {
         byte[] epubData = fileItem.getData();
         
         if ( !logic.isCheck(epubData) ) {
+            this.errors.put("errors", ApplicationMessage.get("message.epubCheck",ApplicationMessage.get("label.epubFile")));
             //TODO メッセージ
             return forward("index.jsp");
         }
@@ -68,8 +75,13 @@ public class UploadController extends Controller {
             tx.rollback();
             throw ex;
         }
-        
         //TODO アップロードしました。
-        return forward("index.jsp");
+        return redirect("/dashboard/");
+    }
+
+    private boolean validate() {
+        Validators v = new Validators(request);
+        v.add("epubFile", v.required());
+        return v.validate();
     }
 }

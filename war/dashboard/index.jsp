@@ -8,10 +8,9 @@
   <c:param name="mainMenu"> 
   </c:param> 
   <c:param name="content"> 
-  
+電子書籍をアップロード：
 <form method="POST" action="./upload" enctype="multipart/form-data">
-	<input type="file" name="epubFile">
-	<input type="submit" value="アップロード">
+	<input type="file" name="epubFile"> <input type="submit" value="アップロード">
 </form>
 
 <br>
@@ -19,7 +18,7 @@
 <br>
 
 <c:forEach var="obj" items="${contentList}" varStatus="status">
-　　名前：<c:out value="${obj.title}"/>,Revision:<c:out value="${obj.targetRevision}"/><br/>
+　　編集｜<a href="/view/?id=${obj.key.id}"><c:out value="${obj.title}"/></a>｜<a href="/download/?id=${obj.key.id}">ダウンロード</a>
 </c:forEach> 
  
  
