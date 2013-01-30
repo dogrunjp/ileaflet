@@ -6,13 +6,22 @@
   <c:param name="javascript"> 
   </c:param> 
   <c:param name="mainMenu"> 
-
+  </c:param> 
+  <c:param name="content"> 
+  
 <form method="POST" action="./upload" enctype="multipart/form-data">
 	<input type="file" name="epubFile">
 	<input type="submit" value="アップロード">
 </form>
-  
-  </c:param> 
-  <c:param name="content"> 
+
+<br>
+<br>
+<br>
+
+<c:forEach var="obj" items="${contentList}" varStatus="status">
+　　名前：<c:out value="${obj.title}"/>,Revision:<c:out value="${obj.targetRevision}"/><br/>
+</c:forEach> 
+ 
+ 
   </c:param> 
 </c:import> 
