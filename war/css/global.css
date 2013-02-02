@@ -1,22 +1,12 @@
 @CHARSET "utf-8";
 
 body {
-	padding:0px;
-	margin:0px;
-	background-color: #eeeef1;
-	font-family: arial,sans-serif;
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
-#header {
-	padding:0px;
-	margin:0px;
-	background-color:#ABCDEF;
-	height:29px;
-	border-style:solid;
-	border-color:#bbbbcc;
-	border-width:0 0 1 0;
-	float:left;
-	width:100%;
+.sidebar-nav {
+  padding: 9px 0;
 }
 
 #footer {
@@ -35,17 +25,6 @@ body {
 	text-align: center;
 	width:100%;
 	font-size:9px;
-}
-
-#mainMenu {
-	text-align:right;
-	padding:2px;
-}
-
-#content {
-	background-color:#fafafa;
-	display: block;
-	clear: both;
 }
 
 form {
