@@ -24,6 +24,9 @@ public class IndexController extends Controller {
         String id = requestScope("id");
         ContentDao dao = new ContentDao();
         Content content = dao.findById(id);
+        if ( content == null ) {
+            //TODO 回避
+        }
 
         FileService fileService = FileServiceFactory.getFileService();
         String filename = "/gs/leaflet/" + 

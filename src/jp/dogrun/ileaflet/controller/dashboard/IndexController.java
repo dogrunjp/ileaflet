@@ -13,6 +13,7 @@ public class IndexController extends Controller {
 
     @Override
     public Navigation run() throws Exception {
+
         Actor actor = sessionScope(Actor.class.getName());
         //ログイン状態を取得
         if ( actor == null ) {
