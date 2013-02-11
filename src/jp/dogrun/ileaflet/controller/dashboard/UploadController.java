@@ -2,15 +2,13 @@ package jp.dogrun.ileaflet.controller.dashboard;
 
 import java.nio.ByteBuffer;
 
-import jp.dogrun.ileaflet.logic.EpubLogic;
+import jp.dogrun.ileaflet.controller.validator.dashboard.UploadValidators;
 import jp.dogrun.ileaflet.model.Actor;
 import jp.dogrun.ileaflet.model.Content;
 
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
-import org.slim3.controller.validator.Validators;
 import org.slim3.datastore.Datastore;
-import org.slim3.util.ApplicationMessage;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Transaction;
@@ -30,15 +28,6 @@ public class UploadController extends DashboardController {
         }
 
         FileItem fileItem = requestScope("epubFile");
-        
-        EpubLogic logic = new EpubLogic();
-        byte[] epubData = fileItem.getData();
-        if ( !logic.isCheck(epubData) ) {
-            this.errors.put("errors", ApplicationMessage.get("message.epubCheck",ApplicationMessage.get("label.epubFile")));
-            //TODO メッセージ
-            return forward("index.jsp");
-        }
-
         Actor actor = getActor();
 
         //コンテンツデータを設定
@@ -48,7 +37,7 @@ public class UploadController extends DashboardController {
         content.setTargetRevision(0);
         content.setPurchase(false);
         content.setPublish(false);
-        content.setCapacity(Long.valueOf(epubData.length));
+        content.setCapacity(Long.valueOf(fileItem.getData().length));
 
         Transaction tx = Datastore.beginTransaction();
         try {
@@ -80,8 +69,8 @@ public class UploadController extends DashboardController {
     }
 
     private boolean validate() {
-        Validators v = new Validators(request);
-        v.add("epubFile", v.required());
+        UploadValidators v = new UploadValidators(request);
+        v.add("epubFile", v.required(),v.check());
         return v.validate();
     }
 }

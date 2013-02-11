@@ -8,6 +8,7 @@ import jp.dogrun.ileaflet.util.ApplicationUtil;
 
 import org.slim3.controller.validator.AbstractValidator;
 import org.slim3.util.ApplicationMessage;
+import org.slim3.util.StringUtil;
 
 public class LogonValidator extends AbstractValidator {
 
@@ -16,7 +17,13 @@ public class LogonValidator extends AbstractValidator {
         
         //入力値をMD5化（identityとパスワード）
         String identity = (String)parameters.get("identity");
+        if ( StringUtil.isEmpty(identity) ) {
+            return null;
+        }
         String password = (String)parameters.get("password");
+        if ( StringUtil.isEmpty(password) ) {
+            return null;
+        }
 
         //パスワードとユーザから検索
         ActorDao dao = new ActorDao();
