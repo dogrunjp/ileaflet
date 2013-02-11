@@ -28,8 +28,17 @@
 
             <ul class="nav pull-right">
             
-            <li><a href="/login/">ログイン</a></li>
+            <li>
+<c:if test="${empty userName}">
+            	<a href="/login/">ログイン</a>
+</c:if>
+<c:if test="${not empty userName}">
+            	<a href="/dashboard/">${userName}</a>
+</c:if>
+            </li>
+<c:if test="${not empty userName}">
             <li><a href="/login/logout">ログアウト</a></li>
+</c:if>
             </ul>
           </div>
         </div>

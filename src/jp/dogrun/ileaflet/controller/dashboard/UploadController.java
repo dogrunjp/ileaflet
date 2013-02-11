@@ -6,7 +6,6 @@ import jp.dogrun.ileaflet.logic.EpubLogic;
 import jp.dogrun.ileaflet.model.Actor;
 import jp.dogrun.ileaflet.model.Content;
 
-import org.slim3.controller.Controller;
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
 import org.slim3.controller.validator.Validators;
@@ -21,10 +20,10 @@ import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 import com.google.appengine.api.files.GSFileOptions.GSFileOptionsBuilder;
 
-public class UploadController extends Controller {
+public class UploadController extends DashboardController {
 
     @Override
-    public Navigation run() throws Exception {
+    public Navigation process() throws Exception {
         
         if ( !validate() ) {
             return forward("index.jsp");
@@ -34,13 +33,13 @@ public class UploadController extends Controller {
         
         EpubLogic logic = new EpubLogic();
         byte[] epubData = fileItem.getData();
-        
         if ( !logic.isCheck(epubData) ) {
             this.errors.put("errors", ApplicationMessage.get("message.epubCheck",ApplicationMessage.get("label.epubFile")));
             //TODO メッセージ
             return forward("index.jsp");
         }
-        Actor actor = sessionScope(Actor.class.getName());
+
+        Actor actor = getActor();
 
         //コンテンツデータを設定
         Content content = new Content();
@@ -75,6 +74,7 @@ public class UploadController extends Controller {
             tx.rollback();
             throw ex;
         }
+
         //TODO アップロードしました。
         return redirect("/dashboard/");
     }

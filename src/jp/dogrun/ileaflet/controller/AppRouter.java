@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import jp.dogrun.ileaflet.model.Actor;
 
 import org.slim3.controller.router.RouterImpl;
+import org.slim3.util.ByteUtil;
 
 public class AppRouter extends RouterImpl {
 
@@ -28,14 +29,14 @@ public class AppRouter extends RouterImpl {
 
     @Override
     public String route(HttpServletRequest request, String path) {
-        System.out.println("きとるよー");
-
         HttpSession session = request.getSession();
         if ( session != null ) {
-            //Actor actor = (Actor)session.getAttribute(Actor.class.getName());
-            //if ( actor != null ) {
-                //request.setAttribute("userName", actor.getName());
-            //}
+            Object actorObj = session.getAttribute(Actor.class.getName());
+            if ( actorObj != null ) {
+                byte[] bytes = ByteUtil.toByteArray(actorObj);
+                Actor actor = ByteUtil.toObject(bytes, getClass().getClassLoader());
+                request.setAttribute("userName", actor.getName());
+            }
         }
         
         if ( isFilter(path,"/dashboard") ) return path;
