@@ -14,20 +14,16 @@ public class IndexController extends Controller {
         Actor actor = sessionScope(Actor.class.getName());
         //ログイン状態をダッシュボードではなく、リダイレクトする
         if ( actor != null ) {
-
-            //TODO だっしゅ
-
             return redirect("../dashboard/");
         }
-       
+
         //コントローラー必要なしのタイプの場合
         String type = requestScope("type");
         if ( !StringUtil.isEmpty(type) ) {
             return forward(type + ".jsp");
         }
 
-        //リダイレクトページのリクエスト値を取得
-        //設定
+        //TODO リダイレクトページのリクエスト値を取得
 
         //ログインページに移動
         return forward("index.jsp");

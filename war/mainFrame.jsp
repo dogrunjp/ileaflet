@@ -47,7 +47,9 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
+
 <c:if test="${not empty errors}">
+
 <div class="alert">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong>Warning!</strong> 
@@ -57,9 +59,11 @@
 </c:forEach>
 </ul>
 </div>
+
 </c:if>
 
   		${param.content}
+  
       </div>
     </div>
 
