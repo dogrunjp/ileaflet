@@ -5,6 +5,7 @@
     <title>${param.title}</title>
     <link type="text/css" rel="stylesheet" href="/css/global.css" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+    <script src="/js/jquery-1.9.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
   </head>
 
@@ -46,22 +47,24 @@
     </div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
 
 <c:if test="${not empty errors}">
 
-<div class="alert">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Warning!</strong> 
-<ul>
-<c:forEach var="e" items="${f:errors()}">
-<li><span class="error">${f:h(e)}</span></li>
-</c:forEach>
-</ul>
+<div class="row-fluid">
+  <div class="alert">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Warning!</strong> 
+    <ul>
+      <c:forEach var="e" items="${f:errors()}">
+      <li><span class="error">${f:h(e)}</span></li>
+      </c:forEach>
+    </ul>
+  </div>
 </div>
 
 </c:if>
 
+      <div class="row-fluid">
   		${param.content}
   
       </div>

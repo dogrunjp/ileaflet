@@ -10,6 +10,7 @@ public class ActorDao extends DaoBase<Actor>{
 
     public Actor findById(String identity) {
         ActorMeta meta = ActorMeta.get();
+        
         return Datastore.query(Actor.class).
                 filter(
                     meta.identity.equal(identity)

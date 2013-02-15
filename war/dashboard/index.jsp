@@ -2,44 +2,49 @@
 <c:import url="../mainFrame.jsp"> 
   <c:param name="title" value="ダッシュボード"/> 
   <c:param name="content"> 
-  
-  <div class="span2">
-    <div class="well sidebar-nav">
-      <ul class="nav nav-list">
-        <li class="nav-header">Sidebar</li>
-        <li class="active"><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li class="nav-header">Sidebar</li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li class="nav-header">Sidebar</li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li>
-      </ul>
-    </div>
-  </div>
+ 
+<div class="span12 tabbable tabs-left">
 
-  <div class="span10">
+<ul class="nav nav-tabs">
+  <li class="active">
+  <a href="#sns" data-toggle="tab">Section 1</a>
+  </li>
+  <li>
+  <a href="#manage" data-toggle="tab">Section 2</a>
+  </li>
+  <li>
+  <a href="#upload" data-toggle="tab">Section 3</a>
+  </li>
+</ul>
+
+
+<div class="tab-content">
+
+<div class="tab-pane active" id="sns">
+TOP
+</div>
+<div class="tab-pane" id="manage">
+<table class="table table-bordered">
+<c:forEach var="obj" items="${contentList}" varStatus="status">
+   <tr>
+　　<td>編集</td>
+    <td><a href="/view/${obj.key.id}"><c:out value="${obj.title}"/></a></td>
+    <td><a href="/download/${obj.key.id}">ダウンロード</a></td>
+   </tr>
+</c:forEach> 
+</table>
+</div>
+
+<div class="tab-pane" id="upload">
 電子書籍をアップロード：
 <form method="POST" action="./upload" enctype="multipart/form-data">
 	<input type="file" name="epubFile"> <input type="submit" value="アップロード">
 </form>
+</div>
 
-<br>
-<br>
-<br>
+</div>
 
-<c:forEach var="obj" items="${contentList}" varStatus="status">
-　　編集｜<a href="/view/?id=${obj.key.id}"><c:out value="${obj.title}"/></a>｜<a href="/download/?id=${obj.key.id}">ダウンロード</a>
-</c:forEach> 
-  </div>
+</div>
  
   </c:param> 
 </c:import> 

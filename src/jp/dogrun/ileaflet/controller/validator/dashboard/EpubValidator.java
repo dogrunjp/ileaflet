@@ -21,7 +21,6 @@ public class EpubValidator extends AbstractValidator {
     public String validate(Map<String, Object> parameters, String name) {
         
         FileItem fileItem = (FileItem)parameters.get(name);
-        System.out.println(fileItem);
         if ( fileItem == null ) return null;
         
         EpubLogic logic = new EpubLogic();

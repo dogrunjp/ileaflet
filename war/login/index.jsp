@@ -3,7 +3,7 @@
   <c:param name="title" value="ログイン"/> 
   <c:param name="content"> 
   
-        <div class="span12">
+<div class="span12">
         
 <form method="POST" action="./logon" class="form-horizontal form-inline">
 <div class="control-group">
@@ -18,12 +18,19 @@
     <input type="password" class="input-xlarge" placeholder="Password" name="password">
   </div>
 </div>
+
+<div class="control-group">
+  <div class="controls">
 <button type="submit" class="btn btn-primary">Sign in</button> 
 <input type="hidden" name="redirect" value="${redirect}">
+</div>
 </form>
 
 <a href="./?type=create">アカウントの新規作成</a>
+
 <a href="./?type=forget">パスワードを忘れたら。。。</a>
+
+
 
 </div>
 
