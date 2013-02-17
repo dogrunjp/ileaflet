@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 
 public class ApplicationUtil {
+   
+    public static final String BACKET_NAME = "leaflet";
     
     public static String getHost(HttpServletRequest request) {
         String url = request.getRequestURL().toString();

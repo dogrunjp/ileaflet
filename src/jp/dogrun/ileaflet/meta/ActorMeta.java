@@ -1,6 +1,6 @@
 package jp.dogrun.ileaflet.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-02-16 05:33:27")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-02-17 19:21:20")
 /** */
 public final class ActorMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ileaflet.model.Actor> {
 

@@ -21,10 +21,14 @@ public class EpubLogic {
 
     public EpubLogic() {
     }
-
-    public boolean isCheck(byte[] data) {
         
+    public boolean isCheck(byte[] data) {
         InputStream inStream = new ByteArrayInputStream(data);
+        return isCheck(inStream);
+    }
+
+    public boolean isCheck(InputStream inStream) {
+
         ZipInputStream epubStream = new ZipInputStream(inStream);
         ZipEntry entry;
         try {
@@ -35,7 +39,7 @@ public class EpubLogic {
 
         if ( entry == null ) return false;
         if ( !entry.getName().equals("mimetype") ) return false;
-        
+
         byte[] mimeData = read(epubStream,entry);
         String mimeBuf = new String(mimeData);
         if ( !mimeBuf.equals("application/epub+zip") ) return false;
