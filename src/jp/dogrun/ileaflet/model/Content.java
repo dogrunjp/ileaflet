@@ -22,6 +22,7 @@ public class Content implements Serializable {
     private Long version;
 
     private String title;
+    private String detail;
     private Integer targetRevision;
     private Boolean publish;
     private Boolean purchase;
@@ -165,5 +166,13 @@ public class Content implements Serializable {
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

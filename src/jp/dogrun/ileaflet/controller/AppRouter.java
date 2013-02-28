@@ -19,6 +19,9 @@ public class AppRouter extends RouterImpl {
         addRouting(
             "/view/{contentId}", 
             "/view/?id={contentId}"); 
+        addRouting(
+            "/book/{contentId}", 
+            "/book/?id={contentId}"); 
     }
 
     @Override

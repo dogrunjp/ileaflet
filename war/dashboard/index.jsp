@@ -27,9 +27,10 @@ TOP
 <table class="table table-bordered">
 <c:forEach var="obj" items="${contentList}" varStatus="status">
    <tr>
-　　<td>編集</td>
-    <td><a href="/view/${obj.key.id}"><c:out value="${obj.title}"/></a></td>
+　　<td><button>編集</button></td>
+    <td><a href="/book/${obj.key.id}"><c:out value="${obj.title}"/></a></td>
     <td><a href="/download/${obj.key.id}">ダウンロード</a></td>
+　　<td><button>削除</button></td>
    </tr>
 </c:forEach> 
 </table>

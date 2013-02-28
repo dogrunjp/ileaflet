@@ -48,6 +48,7 @@ public class EpubLogic {
         try {
             while ( (entry = epubStream.getNextEntry()) != null ) {
                 String name = entry.getName();
+                System.out.println(name);
                 epubMap.put(name, true);
                 if ( name.equals("META-INF/container.xml") ) {
                     containerData = read(epubStream,entry);
