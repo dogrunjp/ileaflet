@@ -27,6 +27,7 @@ public class AppRouter extends RouterImpl {
     @Override
     public boolean isStatic(String path) throws NullPointerException {
         if ( isFilter(path,"/_ah/") ) return true;
+        if ( isFilter(path,".jsp") ) return true;
         return super.isStatic(path);
     }
 
