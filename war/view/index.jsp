@@ -7,8 +7,8 @@
 	<ul class="nav nav-tabs" id="nav">
 	</ul> 
 <div class="tab-content" id="tab-content">
-	<div class="tab-pane active" id="bookPanel" width="90%" height="100%">
-		<iframe id="epub" width="90%" height="100%"></iframe>
+	<div class="tab-pane active" id="bookPanel" width="90%">
+		<iframe id="epub" width="90%" height="100%" src="empty.html"></iframe>
 	</div>
 </div>
         

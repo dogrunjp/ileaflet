@@ -48,7 +48,6 @@ public class EpubLogic {
         try {
             while ( (entry = epubStream.getNextEntry()) != null ) {
                 String name = entry.getName();
-                System.out.println(name);
                 epubMap.put(name, true);
                 if ( name.equals("META-INF/container.xml") ) {
                     containerData = read(epubStream,entry);
@@ -69,6 +68,22 @@ public class EpubLogic {
         if ( containerData == null ) return false;
         if ( opfName == null ) return false;
         if ( !epubMap.get(opfName) ) return false;
+       
+        try {
+            byte[] opfData = retry(opfName,data);
+            
+            try {
+                checkOpf(opfData,epubMap);
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
+            
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }      
+        
         return true;
     }
 
@@ -77,21 +92,15 @@ public class EpubLogic {
      * @param opfData
      * @param epubMap
      * @return
+     * @throws IOException 
+     * @throws SAXException 
+     * @throws ParserConfigurationException 
      */
-    private boolean checkOpf(byte[] opfData, Map<String, Boolean> epubMap) {
+    private boolean checkOpf(byte[] opfData, Map<String, Boolean> epubMap) throws ParserConfigurationException, SAXException, IOException {
         //全てのファイルが存在しているか？
         //item のhrefが全部あるか？
         //reference のhrefが全部あるか？
-        Document doc = null;
-        try {
-            doc = loadXml(opfData);
-        } catch (ParserConfigurationException e) {
-            return false;
-        } catch (SAXException e) {
-            return false;
-        } catch (IOException e) {
-            return false;
-        }
+        Document doc = loadXml(opfData);
 
         NodeList itemTagList = doc.getElementsByTagName("item");
         if ( itemTagList != null ) {

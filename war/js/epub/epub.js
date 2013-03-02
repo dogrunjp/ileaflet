@@ -50,9 +50,31 @@ var epub = {
 	   		var parent = linkTag.parentElement;
 	   		parent.appendChild(styleTag);
 
+   		}
+   		//リンクタグの削除
+   		for ( var cnt = linkTags.length; cnt > 0; --cnt ) {
+	   		var linkTag = linkTags[cnt-1];
 	   		// リンクタグは削除
 	   		linkTag.parentElement.removeChild(linkTag);
    		}
+   		
+   		var scriptTags = dom.getElementsByTagName("script");
+   		for ( var cnt = 0; cnt < scriptTags.length; ++cnt ) {
+	   		var scriptTag = scriptTags[cnt];
+	   		var scriptFileName = scriptTag.getAttribute("src");
+	   		if ( scriptFileName == null ) continue;
+
+	   		scriptTag.setAttribute("src","");
+	   		var scriptFileData = epub.getData(scriptFileName);
+	   		
+	   		var scriptData = document.createTextNode(scriptFileData);
+
+	   		scriptTag.appendChild(scriptData);
+   		}
+   		
+   		
+   		
+   		
 
    		var serializer = new XMLSerializer();
    		var newXhtml = serializer.serializeToString(dom);
