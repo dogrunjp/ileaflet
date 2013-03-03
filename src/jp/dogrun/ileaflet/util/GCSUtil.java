@@ -40,11 +40,8 @@ public class GCSUtil {
         byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
         int size = -1;
 
-        int cnt = 1;
         while (-1 != (size = input.read(buffer))) {
-            System.out.println("Loop:" + cnt);
           output.write(buffer, 0, size);
-          cnt++;
         }
         input.close();
         output.close();

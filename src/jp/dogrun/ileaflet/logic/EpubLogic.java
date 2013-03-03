@@ -1,6 +1,7 @@
 package jp.dogrun.ileaflet.logic;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -12,6 +13,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import jp.dogrun.ileaflet.IllException;
+import jp.dogrun.ileaflet.dto.EpubDto;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -20,6 +24,111 @@ import org.xml.sax.SAXException;
 public class EpubLogic {
 
     public EpubLogic() {
+    }
+
+    /**
+     * Epubのデータを抽出
+     * @param data
+     * @return
+     */
+    public EpubDto createEpubDao(byte[] data) {
+        
+        byte[] containerData;
+        try {
+            containerData = getData("META-INF/container.xml",data);
+        } catch (IOException e) {
+            throw new IllException("META-INF/container.xmlの取得に失敗",e);
+        }
+        String opfName = getOpfName(containerData);
+        String path = opfName.substring(0,opfName.indexOf("/") + 1);
+
+        byte[] opfData;
+        try {
+            opfData = getData(opfName,data);
+        } catch (IOException e) {
+            throw new IllException(opfName + "の取得に失敗",e);
+        }
+
+        Document doc;
+        try {
+            doc = loadXml(opfData);
+        } catch (ParserConfigurationException e) {
+            throw new IllException(opfName + "のパースに失敗",e);
+        } catch (SAXException e) {
+            throw new IllException(opfName + "のパースに失敗",e);
+        } catch (IOException e) {
+            throw new IllException(opfName + "のパースに失敗",e);
+        }
+
+        EpubDto dto = new EpubDto();
+
+        //<dc:title>PHOTOHOKU_1212</dc:title>
+        dto.setTitle(getTagText(doc,"dc:title"));
+        //<dc:creator id="creator">PHOTOHOKU</dc:creator>
+        dto.setCreator(getTagText(doc,"dc:creator"));
+        //<dc:language>ja</dc:language>
+        dto.setLangage(getTagText(doc,"dc:language"));
+
+        NodeList itemList = doc.getElementsByTagName("item");
+        for ( int idx = 0; idx < itemList.getLength(); ++idx ) {
+            Element elm = (Element)itemList.item(idx);
+            String id = elm.getAttribute("id");
+            String href = elm.getAttribute("href");
+            dto.putResource(id,href);
+        }
+
+        NodeList pageList = doc.getElementsByTagName("itemref");
+        for ( int idx = 0; idx < pageList.getLength(); ++idx ) {
+            Element elm = (Element)pageList.item(idx);
+            String id = elm.getAttribute("idref");
+            dto.addPage(id);
+        }
+
+        NodeList metaList = doc.getElementsByTagName("meta");
+        //<meta name="cover" content="cover_5266"/>
+        String coverName = null;
+        for ( int idx = 0; idx < metaList.getLength(); ++idx ) {
+            Element elm = (Element)metaList.item(idx);
+            String name = elm.getAttribute("name");
+            if ( "cover".equals(name) ) {
+                coverName = elm.getAttribute("content");
+                break;
+            }
+        }
+
+        if ( coverName != null ) {
+            String dataName  = dto.getResourceMap().get(coverName);
+            try {
+                byte[] coverData = getData(path + dataName,data);
+                dto.setCover(coverData);
+                dto.setCoverName(dataName);
+            } catch (IOException e) {
+                throw new IllException("カバーデータのの取得に失敗",e);
+            }
+        }
+       
+        /*
+        <dc:identifier id="pub-id">urn:uuid:2e0b7b3e-0dbe-45ef-a1eb-a472dacb544b</dc:identifier>
+        <meta property="dcterms:identifier" id="uuid">urn:uuid:2e0b7b3e-0dbe-45ef-a1eb-a472dacb544b</meta>
+        <meta property="dcterms:modified">2012-12-12T00:00:00Z</meta>
+        <dc:type>Fixedlayout EPUB</dc:type>
+        <dc:date>2012-12-12T00:00:00Z</dc:date>
+        <meta property="rendition:layout">pre-paginated</meta>
+        <meta property="rendition:spread">auto</meta>
+        <meta property="rendition:orientation">auto</meta>
+        <meta property="layout:orientation">auto</meta>
+        <meta property="layout:page-spread">auto</meta>
+        <meta property="layout:fixed-layout">true</meta>
+        <meta property="layout:overflow-scroll">true</meta>
+        */
+        return dto;
+    }
+
+    private String getTagText(Document doc,String tagName) {
+        NodeList nodeList = doc.getElementsByTagName(tagName);
+        if ( nodeList == null || nodeList.getLength() <= 0 ) return null;
+        Element elm = (Element)nodeList.item(0);
+        return elm.getTextContent();
     }
 
     public boolean isCheck(byte[] data) {
@@ -36,7 +145,12 @@ public class EpubLogic {
         if ( entry == null ) return false;
         if ( !entry.getName().equals("mimetype") ) return false;
         
-        byte[] mimeData = read(epubStream,entry);
+        byte[] mimeData;
+        try {
+            mimeData = read(epubStream,entry);
+        } catch (IOException e1) {
+            return false;
+        }
         String mimeBuf = new String(mimeData);
         if ( !mimeBuf.equals("application/epub+zip") ) return false;
 
@@ -68,62 +182,7 @@ public class EpubLogic {
         if ( containerData == null ) return false;
         if ( opfName == null ) return false;
         if ( !epubMap.get(opfName) ) return false;
-       
-        try {
-            byte[] opfData = retry(opfName,data);
-            
-            try {
-                checkOpf(opfData,epubMap);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            }
-            
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }      
         
-        return true;
-    }
-
-    /**
-     * OPFデータのチェック
-     * @param opfData
-     * @param epubMap
-     * @return
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws ParserConfigurationException 
-     */
-    private boolean checkOpf(byte[] opfData, Map<String, Boolean> epubMap) throws ParserConfigurationException, SAXException, IOException {
-        //全てのファイルが存在しているか？
-        //item のhrefが全部あるか？
-        //reference のhrefが全部あるか？
-        Document doc = loadXml(opfData);
-
-        NodeList itemTagList = doc.getElementsByTagName("item");
-        if ( itemTagList != null ) {
-            for ( int idx = 0; idx < itemTagList.getLength(); ++idx ) {
-                Element item = (Element)itemTagList.item(idx);
-                String path = item.getAttribute("href");
-                if ( !epubMap.get(path) ) {
-                    return false;
-                }
-            }
-        }
-
-        NodeList referenceTagList = doc.getElementsByTagName("reference");
-        if ( referenceTagList != null ) {
-            for ( int idx = 0; idx < referenceTagList.getLength(); ++idx ) {
-                Element item = (Element)referenceTagList.item(idx);
-                String path = item.getAttribute("href");
-                if ( !epubMap.get(path) ) {
-                    return false;
-                }
-            }
-        }
-
         return true;
     }
 
@@ -133,14 +192,14 @@ public class EpubLogic {
      * @return
      * @throws IOException 
      */
-    private byte[] retry(String opfName,byte[] data) throws IOException {
+    private byte[] getData(String dataName,byte[] data) throws IOException {
         InputStream inStream = new ByteArrayInputStream(data);
         ZipInputStream epubStream = new ZipInputStream(inStream);
         ZipEntry entry = null;
         byte[] opfData = null;
         while ( (entry = epubStream.getNextEntry()) != null ) {
             String name = entry.getName();
-            if ( name.equals(opfName) ) {
+            if ( name.equals(dataName) ) {
                 opfData = read(epubStream,entry);
                 epubStream.close();
                 return opfData;
@@ -200,15 +259,19 @@ public class EpubLogic {
      * @param stream
      * @param entry
      * @return
+     * @throws IOException 
      */
-    private byte[] read(ZipInputStream stream,ZipEntry entry) {
-        byte[] data = new byte[(int)entry.getSize()];
-        try {
-            stream.read(data);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private byte[] read(ZipInputStream stream,ZipEntry entry) throws IOException {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        byte [] buffer = new byte[1024];
+        while ( true ) {
+            int len = stream.read(buffer);
+        	if(len < 0) {
+        	    break;
+        	}
+        	bout.write(buffer, 0, len);
         }
-        return data;
+        return bout.toByteArray();
     }
 
 }

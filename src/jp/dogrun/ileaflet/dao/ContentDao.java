@@ -21,14 +21,7 @@ public class ContentDao extends DaoBase<Content>{
 
     public Content findById(String id) {
         Key key = Datastore.createKey(Content.class, Long.valueOf(id));
-        
-        
-        
         ContentMeta meta = ContentMeta.get();
-       
-        
-        
-        
         return Datastore.query(Content.class).filter(
             meta.key.equal(key)
             ).asSingle();

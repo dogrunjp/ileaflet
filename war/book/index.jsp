@@ -5,6 +5,7 @@
  
 <div class="span12">
 
+<img src="/img/cover/${content.key.id}">
 twitter
 facebook
 instagram

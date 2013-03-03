@@ -35,7 +35,6 @@ public class Content implements Serializable {
     @Attribute(listener = ModificationDate.class)
     private Date editAt;
 
-
     /**
      * Returns the key.
      *

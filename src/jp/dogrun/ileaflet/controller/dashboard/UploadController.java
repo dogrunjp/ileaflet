@@ -3,8 +3,11 @@ package jp.dogrun.ileaflet.controller.dashboard;
 import java.nio.ByteBuffer;
 
 import jp.dogrun.ileaflet.controller.validator.dashboard.UploadValidators;
+import jp.dogrun.ileaflet.dto.EpubDto;
+import jp.dogrun.ileaflet.logic.EpubLogic;
 import jp.dogrun.ileaflet.model.Actor;
 import jp.dogrun.ileaflet.model.Content;
+import jp.dogrun.ileaflet.model.Cover;
 
 import org.slim3.controller.Navigation;
 import org.slim3.controller.upload.FileItem;
@@ -29,19 +32,32 @@ public class UploadController extends DashboardController {
 
         FileItem fileItem = requestScope("epubFile");
         Actor actor = getActor();
+       
+        EpubLogic logic = new EpubLogic();
+        EpubDto dto = logic.createEpubDao(fileItem.getData());
 
         //コンテンツデータを設定
         Content content = new Content();
         content.setIdentity(actor.getIdentity());
-        content.setTitle(fileItem.getFileName());
+        content.setTitle(dto.getTitle());
         content.setTargetRevision(0);
         content.setPurchase(false);
         content.setPublish(false);
         content.setCapacity(Long.valueOf(fileItem.getData().length));
+       
+        Cover cover = new Cover();
+        cover.setData(dto.getCover());
+        cover.setFileName(dto.getCoverName());
 
         Transaction tx = Datastore.beginTransaction();
         try {
             Datastore.put(tx,content);
+            cover.setContentId(String.valueOf(content.getKey().getId()));
+            Datastore.put(tx,cover);
+            
+            System.out.println("ID:" + content.getKey().getId());
+            System.out.println("DATA:" + dto.getCover().length);
+
             Key key = content.getKey();
             String BUCKETNAME = "leaflet";
         	String FILENAME = actor.getIdentity() + "/"+ key.getId() + "/" + content.getTargetRevision() + ".epub";
