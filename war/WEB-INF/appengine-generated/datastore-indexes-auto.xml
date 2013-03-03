@@ -1,8 +1,8 @@
-<!-- Indices written at Fri, 1 Mar 2013 03:50:58 JST -->
+<!-- Indices written at Sun, 3 Mar 2013 15:43:46 JST -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 54 times in query history -->
     <datastore-index kind="Content" ancestor="false" source="auto">
         <property name="identity" direction="asc"/>
         <property name="createAt" direction="desc"/>
