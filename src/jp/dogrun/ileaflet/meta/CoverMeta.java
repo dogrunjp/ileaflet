@@ -1,6 +1,6 @@
 package jp.dogrun.ileaflet.meta;
 
-//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-03-04 15:50:58")
+//@javax.annotation.Generated(value = { "slim3-gen", "@VERSION@" }, date = "2013-03-12 15:08:29")
 /** */
 public final class CoverMeta extends org.slim3.datastore.ModelMeta<jp.dogrun.ileaflet.model.Cover> {
 

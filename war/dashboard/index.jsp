@@ -6,7 +6,7 @@
 <div class="span12 tabbable tabs-left">
 
 <ul class="nav nav-tabs">
-  <li class="active">
+  <li>
   <a href="#sns" data-toggle="tab">SNS</a>
   </li>
   <li>
@@ -16,7 +16,7 @@
   <a href="#upload" data-toggle="tab">Upload</a>
   </li>
   
-  <li>
+  <li class="active">
   <a href="#gcsUpload" data-toggle="tab">GCS Upload</a>
   </li>
 </ul>
@@ -24,7 +24,7 @@
 
 <div class="tab-content">
 
-<div class="tab-pane active" id="sns">
+<div class="tab-pane" id="sns">
 TOP
 </div>
 <div class="tab-pane" id="manage">
@@ -47,7 +47,7 @@ TOP
 </form>
 </div>
 
-<div class="tab-pane" id="gcsUpload">
+<div class="tab-pane active" id="gcsUpload">
 電子書籍をアップロード：
 
 <form id="fieldsForm" method="POST">
@@ -58,11 +58,19 @@ TOP
 	<input type="hidden" name="key" value="${key}"/>
 	<input type="hidden" name="bucket" value="${bucket}">
 	<input type="hidden" name="Content-Type" value="${contentType}">
-	<input type="hidden" name="GoogleAccessId" value="${accessId}">
-	<input type="hidden" name="acl" value="${acl}">
+	<input type="hidden" name="success_action_redirect" value="${success_action_redirect}">
+	<input type="hidden" name="GoogleAccessId" value="${googleAccessId}">
+	<input type="hidden" name="signature" value="${signature}">
+	<input type="hidden" name="policy" value="${policy}">
+<!--
+	<input type="hidden" name="key" value="${key}"/>
+	<input type="hidden" name="GoogleAccessId" value="${googleAccessId}">
+	<input type="hidden" name="bucket" value="${bucket}">
+	<input type="hidden" name="Content-Type" value="${contentType}">
 	<input type="hidden" name="success_action_redirect" value="${success_action_redirect}">
 	<input type="hidden" name="policy" value="${policy}">
 	<input type="hidden" name="signature" value="${signature}">
+ -->
 
 	<input type="file" name="file">
 	<input type="submit" value="アップロード">
